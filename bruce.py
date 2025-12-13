@@ -1,6 +1,5 @@
 import itertools
 import string
-import pyautogui
 import time
 import threading
 import os
@@ -48,19 +47,33 @@ try:
         global objective
         print("\033[2J\033[H", end="")
         print("Good bye!")
-        text = str(f"\033[36mfinal running time:{objective:,}'s")
-        width = len(text) + 30
+        text = f"\033[36mfinal running time: {objective:,}'s\033[0m"
+
+        text_len = 0
+        i = 0
+        while i < len(text):
+            if text[i] == "\033":
+                while i < len(text) and text[i] != "m":
+                    i += 1
+                i += 1
+            else:
+                text_len += 1
+                i += 1
+
+        width = text_len + 30
         height = 5
 
         for y in range(height):
             if y == 0 or y == height - 1:
-                print("\033[0m+" + "\033[0m-" * (width - 2) + "\033[0m+")
+                print("+" + "-" * (width - 2) + "+")
             elif y == height // 2:
-                padding = (width - 2 - len(text)) // 2
-                print("\033[0m|" + "\033[0m " * padding + text + "\033[0m " * padding + "\033[0m|")
+                pad_left = (width - 2 - text_len) // 2
+                pad_right = (width - 2 - text_len) - pad_left
+                print("|" + " " * pad_left + text + " " * pad_right + "|")
             else:
-                print("\033[0m|" + "\033[0m " * (width - 2) + "\033[0m|")
-    
+                print("|" + " " * (width - 2) + "|")
+
+
     def device_type():
         if os.path.exists("/data/data/com.termux"):
             return "0"
@@ -130,6 +143,7 @@ d) Everything
         kombinacie = itertools.product(znaky, repeat=pocet)
         #main
         if device_type() == "1":
+            import pyautogui
             print("choose the site")
             time.sleep(4)
             for kombinacia in kombinacie:
