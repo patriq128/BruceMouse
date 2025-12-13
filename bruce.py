@@ -29,6 +29,8 @@ try:
         time.sleep(0.5)
         inputtxt = input("speed value:")
         if inputtxt == "exit":
+            
+            main()
             choosebruce()
         else:
             with open("config.txt", "w") as f:
@@ -46,21 +48,30 @@ try:
         global objective
         print("\033[2J\033[H", end="")
         print("Good bye!")
-        text = str(objective)
-        width = len(text) + 6  # trochu paddingu aby to nevyzeralo ako depresívny rámik
+        text = str(f"\033[36mfinal running time:{objective:,}'s")
+        width = len(text) + 30
         height = 5
 
         for y in range(height):
             if y == 0 or y == height - 1:
-                print("+" + "-" * (width - 2) + "+")
+                print("\033[0m+" + "\033[0m-" * (width - 2) + "\033[0m+")
             elif y == height // 2:
                 padding = (width - 2 - len(text)) // 2
-                print("|" + " " * padding + text + " " * padding + "|")
+                print("\033[0m|" + "\033[0m " * padding + text + "\033[0m " * padding + "\033[0m|")
             else:
-                print("|" + " " * (width - 2) + "|")
+                print("\033[0m|" + "\033[0m " * (width - 2) + "\033[0m|")
     
+    def device_type():
+        if os.path.exists("/data/data/com.termux"):
+            return "0"
+        else:
+            return "1"
+
     #Main screen
     def main():
+        os.system('printf "\\033[9;1t"')
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("\033[2J\033[H", end="")
         print("""\033[35m ███████████                                         ██████   ██████                                     
 ▒▒███▒▒▒▒▒███                                       ▒▒██████ ██████                                      
  ▒███    ▒███ ████████  █████ ████  ██████   ██████  ▒███▒█████▒███   ██████  █████ ████  █████   ██████ 
@@ -72,6 +83,12 @@ try:
         print("\033[94mWelcome in BruceMouse the only place where you can do your best :)")
         print("\033[31m!!Only for education!!")
         print("""\033[0m*type "exit" for exit :3 """)
+        
+        if device_type() == "1":
+            print("\033[32mDevice type: Desktop")
+        else:
+            print("\033[32mDevice type: Phone")
+        
         print("\033[0m---------------------------------------------------------------------------------------------------------")
 
     #Choose screen
@@ -87,6 +104,7 @@ d) Everything
 
     #Coose selecter
     def choose():
+        global objective
         global znaky
         pen = input("typle select:")
         if pen == "a":
@@ -98,8 +116,9 @@ d) Everything
         elif pen == "d":
             znaky = string.ascii_lowercase + string.ascii_uppercase + string.digits
         elif pen == "exit":
-            print("Good Bye!")
-            exit()
+            objective = round(time.time() - start_time, 2)
+            stop()
+            quit()
         else:
             print("!Wrong Input!")
             print("Please repeat")
@@ -109,43 +128,50 @@ d) Everything
         pocet = int(input("Number input:"))
         #calculation
         kombinacie = itertools.product(znaky, repeat=pocet)
-        #information
-        print("choose the site")
-        time.sleep(4)
         #main
-        for kombinacia in kombinacie:
-            print(''.join(kombinacia))
-            pyautogui.typewrite(kombinacia)
-            pyautogui.press("enter")
-            time.sleep(float(speed))
+        if device_type() == "1":
+            print("choose the site")
+            time.sleep(4)
+            for kombinacia in kombinacie:
+                print(''.join(kombinacia))
+                pyautogui.typewrite(kombinacia)
+                pyautogui.press("enter")
+                time.sleep(float(speed))                
+        else:
+            print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
+            time.sleep(4)
+            for kombinacia in kombinacie:
+                print(''.join(kombinacia))
+                time.sleep(float(speed))
+            
 
     def math():
-        world = input("Type the passworld:")
-    
-        chars = 0
+            world = input("Type the passworld:")
+        
+            chars = 0
 
-        has_lower = any(c.islower() for c in world)
-        has_upper = any(c.isupper() for c in world)
-        has_digit = any(c.isdigit() for c in world)
-        has_symbol = any(c in string.punctuation for c in world)
+            has_lower = any(c.islower() for c in world)
+            has_upper = any(c.isupper() for c in world)
+            has_digit = any(c.isdigit() for c in world)
+            has_symbol = any(c in string.punctuation for c in world)
 
-        if has_lower:
-            chars += len(string.ascii_lowercase)
-        if has_upper:
-            chars += len(string.ascii_uppercase)
-        if has_digit:
-            chars += len(string.digits)
-        if has_symbol:
-            chars += len(string.punctuation)
+            if has_lower:
+                chars += len(string.ascii_lowercase)
+            if has_upper:
+                chars += len(string.ascii_uppercase)
+            if has_digit:
+                chars += len(string.digits)
+            if has_symbol:
+                chars += len(string.punctuation)
 
-        total = chars ** len(world)
-        print(f"Possibilitys: {total:,}")
+            total = chars ** len(world)
+            print(f"Possibilitys: {total:,}")
 
     def choosebruce():
+        global objective
         #Asking :3
         print("What type of bruce you want?")
-        print("""
-1.) Keyboard Bruce
+        print("""1.) Keyboard Bruce
 2.) Calculate Bruce
 *) Config""")
         present = input("Select:")
@@ -192,20 +218,22 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
             data()
     
         elif present == "exit":
-            print("Good bye!")
-            exit()    
+            objective = round(time.time() - start_time, 2)
+            stop()
+            quit()  
+            
+        else:
+            print("!Wrong input!")
+            choosebruce()
     
     #Setting time
     timer_thread = threading.Thread(target=timecount, daemon=True)
     timer_thread.start()
     
     #Main controling System
-    os.system('printf "\\033[9;1t"')
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("\033[2J\033[H", end="")
-
     main()
     choosebruce()
 except KeyboardInterrupt:
     objective = round(time.time() - start_time, 2)
     stop()
+    quit()
