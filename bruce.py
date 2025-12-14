@@ -3,8 +3,13 @@ import string
 import time
 import threading
 import os
+import sys
 
 try:
+    
+    def term():
+        if "--vis" in sys.argv:
+            return "1"
     
     #Setup Time
     start_time = time.time()
@@ -45,6 +50,7 @@ try:
     #Stop
     def stop():
         global objective
+        objective = round(time.time() - start_time, 2)
         print("\033[2J\033[H", end="")
         print("Good bye!")
         text = f"\033[36mfinal running time: {objective:,}'s\033[0m"
@@ -80,6 +86,40 @@ try:
         else:
             return "1"
 
+    def help():
+        os.system('printf "\\033[9;1t"')
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("\033[2J\033[H", end="")
+        print("""\033[32m██╗  ██╗███████╗██╗     ██████╗ 
+██║  ██║██╔════╝██║     ██╔══██╗
+███████║█████╗  ██║     ██████╔╝
+██╔══██║██╔══╝  ██║     ██╔═══╝ 
+██║  ██║███████╗███████╗██║     
+╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     """)
+        print("\033[0m---------------------------------------------------------------------------------------------------------")
+        print("""a) Info
+b) Keyboard Bruce
+c) Calculate Bruce
+d) Config""")
+        print("\033[0m---------------------------------------------------------------------------------------------------------")
+        helps = input("select:")
+        
+        if helps == "a":
+            print("Info")
+        elif helps == "b":
+            print("Keyboard Bruce")
+        elif helps == "c":
+            print("Calculate Bruce")
+        elif helps == "d":
+            print("Config")
+        elif helps == "exit":
+            stop()
+            quit()
+        else:
+            print("!Wrong Input!")
+            time.sleep(1)
+            help()
+        
     #Main screen
     def main():
         os.system('printf "\\033[9;1t"')
@@ -101,6 +141,9 @@ try:
             print("\033[32mDevice type: Desktop")
         else:
             print("\033[32mDevice type: Phone")
+            
+        if term() == "1":
+            print("Visualation mode")
         
         print("\033[0m---------------------------------------------------------------------------------------------------------")
 
@@ -117,7 +160,6 @@ d) Everything
 
     #Coose selecter
     def choose():
-        global objective
         global znaky
         pen = input("typle select:")
         if pen == "a":
@@ -129,12 +171,11 @@ d) Everything
         elif pen == "d":
             znaky = string.ascii_lowercase + string.ascii_uppercase + string.digits
         elif pen == "exit":
-            objective = round(time.time() - start_time, 2)
             stop()
             quit()
         else:
             print("!Wrong Input!")
-            print("Please repeat")
+            time.sleep(1)
             choose()
 
     def process():
@@ -144,20 +185,33 @@ d) Everything
         #main
         if device_type() == "1":
             import pyautogui
-            print("choose the site")
-            time.sleep(4)
-            for kombinacia in kombinacie:
-                print(''.join(kombinacia))
-                pyautogui.typewrite(kombinacia)
-                pyautogui.press("enter")
-                time.sleep(float(speed))                
+            if term() == "1":
+                print("Only Visulation mode")
+                time.sleep(4)
+                for kombinacia in kombinacie:
+                    print(''.join(kombinacia))
+                    time.sleep(float(speed))
+                stop()
+                quit()
+            else:
+                print("Choose the site")
+                time.sleep(4)
+                for kombinacia in kombinacie:
+                    print(''.join(kombinacia))
+                    pyautogui.typewrite(kombinacia)
+                    pyautogui.press("enter")
+                    time.sleep(float(speed))
+                stop()
+                quit()
+                                
         else:
             print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
             time.sleep(4)
             for kombinacia in kombinacie:
                 print(''.join(kombinacia))
                 time.sleep(float(speed))
-            
+            stop()
+            quit()
 
     def math():
             world = input("Type the passworld:")
@@ -182,11 +236,11 @@ d) Everything
             print(f"Possibilitys: {total:,}")
 
     def choosebruce():
-        global objective
         #Asking :3
         print("What type of bruce you want?")
         print("""1.) Keyboard Bruce
 2.) Calculate Bruce
+3.) Help
 *) Config""")
         present = input("Select:")
 
@@ -227,17 +281,20 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
             print("\033[0m---------------------------------------------------------------------------------------------------------")
             math()
         
+        elif present == "3":
+            help()
+        
         elif present == "*":
             print("Opening config file")
             data()
     
         elif present == "exit":
-            objective = round(time.time() - start_time, 2)
             stop()
             quit()  
             
         else:
             print("!Wrong input!")
+            time.sleep(1)
             choosebruce()
     
     #Setting time
@@ -248,6 +305,5 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
     main()
     choosebruce()
 except KeyboardInterrupt:
-    objective = round(time.time() - start_time, 2)
     stop()
     quit()
