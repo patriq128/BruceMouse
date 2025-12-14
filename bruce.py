@@ -1,3 +1,4 @@
+# Author: @patriq128
 import itertools
 import string
 import time
@@ -116,7 +117,7 @@ d) Config""")
             stop()
             quit()
         else:
-            print("!Wrong Input!")
+            print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
             help()
         
@@ -133,6 +134,7 @@ d) Config""")
  ▒███    ▒███ ▒███      ▒███ ▒███ ▒███  ███▒███▒▒▒   ▒███      ▒███ ▒███ ▒███ ▒███ ▒███  ▒▒▒▒███▒███▒▒▒  
  ███████████  █████     ▒▒████████▒▒██████ ▒▒██████  █████     █████▒▒██████  ▒▒████████ ██████ ▒▒██████ 
 ▒▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒       ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒   ▒▒▒▒▒▒  ▒▒▒▒▒     ▒▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒   ▒▒▒▒▒▒  """)
+        print("\033[0mAuthor: @patriq128")
         print("\033[94mWelcome in BruceMouse the only place where you can do your best :)")
         print("\033[31m!!Only for education!!")
         print("""\033[0m*type "exit" for exit :3 """)
@@ -174,7 +176,7 @@ d) Everything
             stop()
             quit()
         else:
-            print("!Wrong Input!")
+            print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
             choose()
 
@@ -293,8 +295,9 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
             quit()  
             
         else:
-            print("!Wrong input!")
+            print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
+            main()
             choosebruce()
     
     #Setting time
