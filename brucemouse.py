@@ -9,7 +9,7 @@ import sys
 try:
 
 # Some setup things
-# -------------------------------------------------------------------------------------------------------------------------------------     
+# -------------------------------------------------------------------------------------------------------------------------------------         
     def term():
         if "--vis" in sys.argv:
             return "1"
@@ -88,6 +88,10 @@ try:
             return "0"
         else:
             return "1"        
+        
+    #Setting time
+    timer_thread = threading.Thread(target=timecount, daemon=True)
+    timer_thread.start()
 # ------------------------------------------------------------------------------------------------------------------------------------- 
         
 # Keyboard Bruce
@@ -131,6 +135,44 @@ d) Everything
                 time.sleep(1)
                 keyboard_bruce()
             process()
+# ------------------------------------------------------------------------------------------------------------------------------------- 
+
+# Process
+# ------------------------------------------------------------------------------------------------------------------------------------- 
+    def process():
+        pocet = int(input("Number input:"))
+        #calculation
+        kombinacie = itertools.product(znaky, repeat=pocet)
+        #main
+        if device_type() == "1":
+            import pyautogui
+            if term() == "1":
+                print("Only Visulation mode")
+                time.sleep(4)
+                for kombinacia in kombinacie:
+                    print(''.join(kombinacia))
+                    time.sleep(float(speed))
+                stop()
+                quit()
+            else:
+                print("Choose the site")
+                time.sleep(4)
+                for kombinacia in kombinacie:
+                    print(''.join(kombinacia))
+                    pyautogui.typewrite(kombinacia)
+                    pyautogui.press("enter")
+                    time.sleep(float(speed))
+                stop()
+                quit()
+                                
+        else:
+            print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
+            time.sleep(4)
+            for kombinacia in kombinacie:
+                print(''.join(kombinacia))
+                time.sleep(float(speed))
+            stop()
+            quit()
 # ------------------------------------------------------------------------------------------------------------------------------------- 
 
 # Math
@@ -210,9 +252,10 @@ d) Config""")
             print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
             help()
- # ------------------------------------------------------------------------------------------------------------------------------------- 
+# ------------------------------------------------------------------------------------------------------------------------------------- 
         
-    #Main screen
+# Main
+# ------------------------------------------------------------------------------------------------------------------------------------- 
     def main():
         os.system('printf "\\033[9;1t"')
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -239,43 +282,7 @@ d) Config""")
             print("Visualation mode")
         
         print("\033[0m---------------------------------------------------------------------------------------------------------")
-
-    def process():
-        pocet = int(input("Number input:"))
-        #calculation
-        kombinacie = itertools.product(znaky, repeat=pocet)
-        #main
-        if device_type() == "1":
-            import pyautogui
-            if term() == "1":
-                print("Only Visulation mode")
-                time.sleep(4)
-                for kombinacia in kombinacie:
-                    print(''.join(kombinacia))
-                    time.sleep(float(speed))
-                stop()
-                quit()
-            else:
-                print("Choose the site")
-                time.sleep(4)
-                for kombinacia in kombinacie:
-                    print(''.join(kombinacia))
-                    pyautogui.typewrite(kombinacia)
-                    pyautogui.press("enter")
-                    time.sleep(float(speed))
-                stop()
-                quit()
-                                
-        else:
-            print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
-            time.sleep(4)
-            for kombinacia in kombinacie:
-                print(''.join(kombinacia))
-                time.sleep(float(speed))
-            stop()
-            quit()
-
-    def choosebruce():
+        
         #Asking :3
         print("What type of bruce you want?")
         print("""1.) Keyboard Bruce
@@ -305,16 +312,12 @@ d) Config""")
         else:
             print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
-            main()
-            choosebruce()
-    
-    #Setting time
-    timer_thread = threading.Thread(target=timecount, daemon=True)
-    timer_thread.start()
+            main()           
+ # -------------------------------------------------------------------------------------------------------------------------------------     
     
     #Main controling System
     main()
-    choosebruce()
+    
 except KeyboardInterrupt:
     stop()
     quit()
