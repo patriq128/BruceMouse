@@ -65,3 +65,9 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 
 ```bash
 python brucemouse.py
+```
+
+Visual mode
+```bash
+python brucemouse.py --vis
+```
