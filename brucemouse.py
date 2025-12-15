@@ -27,23 +27,6 @@ try:
     with open("config.txt", "r") as f:
         speed = f.read()
 
-    #Config setting
-    def data():
-        global speed
-        with open("config.txt", "r") as f:
-            speed = f.read()
-            print(speed)
-        time.sleep(0.5)
-        inputtxt = input("speed value:")
-        if inputtxt == "exit":
-            
-            main()
-            choosebruce()
-        else:
-            with open("config.txt", "w") as f:
-                f.write(str(inputtxt))
-            data()
-
     #Time counting
     def timecount():
         while True:
@@ -195,7 +178,13 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
 ░▀▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀""")
             print("\033[0m---------------------------------------------------------------------------------------------------------")
             
-            world = input("Type the passworld:")
+            world1 = input("Type the passworld:")
+            
+            if world1 == "exit":
+                stop()
+                quit()
+            else:
+                world = world1
         
             chars = 0
 
@@ -253,7 +242,41 @@ d) Config""")
             time.sleep(1)
             help()
 # ------------------------------------------------------------------------------------------------------------------------------------- 
-        
+
+# Config
+# ------------------------------------------------------------------------------------------------------------------------------------- 
+    def data():
+        os.system('printf "\\033[9;1t"')
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("\033[2J\033[H", end="")
+        print("""\033[32m                                    
+ ▄▄▄▄▄▄▄               ▄▄           
+███▀▀▀▀▀              ██  ▀▀        
+███      ▄███▄ ████▄ ▀██▀ ██  ▄████ 
+███      ██ ██ ██ ██  ██  ██  ██ ██ 
+▀███████ ▀███▀ ██ ██  ██  ██▄ ▀████ 
+                                 ██ 
+                               ▀▀▀  \033[0m""")
+        global speed
+        with open("config.txt", "r") as f:
+            speed = f.read()
+            speed = float(speed)
+            print(f"Actual speed value: {speed:,}")
+        time.sleep(0.5)
+        inputtxt = input("New speed value:")
+        if inputtxt == "exit":
+            stop()
+            quit()
+        elif any(c.isalpha() for c in inputtxt):
+            print("\033[31m!Only digits!\033[0m")
+            time.sleep(1)
+            data()
+        else:
+            with open("config.txt", "w") as f:
+                f.write(str(inputtxt))
+            data()
+# ------------------------------------------------------------------------------------------------------------------------------------- 
+
 # Main
 # ------------------------------------------------------------------------------------------------------------------------------------- 
     def main():
