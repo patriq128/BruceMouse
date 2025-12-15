@@ -63,6 +63,7 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 
 ## Usage
 
+Normal mode
 ```bash
 python brucemouse.py
 ```
