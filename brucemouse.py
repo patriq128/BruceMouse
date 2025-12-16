@@ -113,6 +113,8 @@ d) Everything
             elif pen == "exit":
                 stop()
                 quit()
+            elif pen == "home":
+                main()
             else:
                 print("\033[31m!Wrong Input!\033[0m")
                 time.sleep(1)
@@ -149,7 +151,7 @@ d) Everything
                 quit()
                                 
         else:
-            print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
+            print("\033[31mSorry Virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
             time.sleep(4)
             for kombinacia in kombinacie:
                 print(''.join(kombinacia))
@@ -183,6 +185,8 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
             if world1 == "exit":
                 stop()
                 quit()
+            elif world1 == "home":
+                main()
             else:
                 world = world1
         
@@ -237,6 +241,8 @@ d) Config""")
         elif helps == "exit":
             stop()
             quit()
+        elif helps == "home":
+            main()
         else:
             print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
@@ -267,6 +273,8 @@ d) Config""")
         if inputtxt == "exit":
             stop()
             quit()
+        elif inputtxt == "home":
+            main()
         elif any(c.isalpha() for c in inputtxt):
             print("\033[31m!Only digits!\033[0m")
             time.sleep(1)
