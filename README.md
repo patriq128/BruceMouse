@@ -31,7 +31,7 @@ The goal of this project is to understand how attacks work so they can be better
 
 ---
 
-## How It Works (High-Level)
+## How It Works
 
 BruceMouse generates combinations of characters using Python's itertools.product.
 
