@@ -125,26 +125,33 @@ d) Everything
 # Process
 # ------------------------------------------------------------------------------------------------------------------------------------- 
     def process():
-        pocet = int(input("Number input:"))
+        numberp = input("Number input:")
+        if any(c.isalpha() for c in numberp):
+            print("\033[31m!Only digits!\033[0m")
+            time.sleep(1)
+            process()
+        else:
+            prosessn = int(numberp)
+            
         #calculation
-        kombinacie = itertools.product(znaky, repeat=pocet)
+        conbination = itertools.product(znaky, repeat=prosessn)
         #main
         if device_type() == "1":
             import pyautogui
             if term() == "1":
                 print("Only Visulation mode")
                 time.sleep(4)
-                for kombinacia in kombinacie:
-                    print(''.join(kombinacia))
+                for conbinatione in conbination:
+                    print(''.join(conbinatione))
                     time.sleep(float(speed))
                 stop()
                 quit()
             else:
                 print("Choose the site")
                 time.sleep(4)
-                for kombinacia in kombinacie:
-                    print(''.join(kombinacia))
-                    pyautogui.typewrite(kombinacia)
+                for conbinatione in conbination:
+                    print(''.join(conbinatione))
+                    pyautogui.typewrite(conbinatione)
                     pyautogui.press("enter")
                     time.sleep(float(speed))
                 stop()
@@ -153,8 +160,8 @@ d) Everything
         else:
             print("\033[31mSorry Virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
             time.sleep(4)
-            for kombinacia in kombinacie:
-                print(''.join(kombinacia))
+            for conbinatione in conbination:
+                print(''.join(conbinatione))
                 time.sleep(float(speed))
             stop()
             quit()
