@@ -80,7 +80,7 @@ try:
 # Keyboard Bruce
 # -------------------------------------------------------------------------------------------------------------------------------------        
     def keyboard_bruce():
-            global znaky
+            global char
             print("\033[2J\033[H", end="")
             print("""\033[32m██╗  ██╗███████╗██╗   ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗ 
 ██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -103,13 +103,13 @@ d) Everything
             print("\033[0m---------------------------------------------------------------------------------------------------------")
             pen = input("typle select:")
             if pen == "a":
-                znaky = string.ascii_lowercase
+                char = string.ascii_lowercase
             elif pen == "b":
-                znaky = string.ascii_uppercase
+                char = string.ascii_uppercase
             elif pen == "c":
-                znaky = string.digits
+                char = string.digits
             elif pen == "d":
-                znaky = string.ascii_lowercase + string.ascii_uppercase + string.digits
+                char = string.ascii_lowercase + string.ascii_uppercase + string.digits
             elif pen == "exit":
                 stop()
                 quit()
@@ -134,7 +134,7 @@ d) Everything
             prosessn = int(numberp)
             
         #calculation
-        conbination = itertools.product(znaky, repeat=prosessn)
+        conbination = itertools.product(char, repeat=prosessn)
         #main
         if device_type() == "1":
             import pyautogui
