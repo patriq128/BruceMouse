@@ -1,4 +1,6 @@
 # Author: @patriq128
+
+# Import libraries
 import itertools
 import string
 import time
@@ -6,14 +8,16 @@ import threading
 import os
 import sys
 
+# Import setup things
 from setup import term, timecount, stop, device_type
 
 # Setup tools
-# ---------------------------
+# ------------------------------------------------------
 from Tools.keyboard_bruce import keyboard_bruce
 from Tools.calculate_bruce import calculate
 from Tools.help_bruce import help_bruce
 from Tools.config import config
+# ------------------------------------------------------
 
 try: 
 
