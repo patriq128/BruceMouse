@@ -87,3 +87,11 @@ def process():
                     time.sleep(float(speed))
                 stop()
                 quit()
+        else:
+            print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
+            time.sleep(4)
+            for conbinatione in conbination:
+                print(''.join(conbinatione))
+                time.sleep(float(speed))
+            stop()
+            quit()
