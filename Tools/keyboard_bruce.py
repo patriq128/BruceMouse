@@ -4,11 +4,13 @@ import time
 import threading
 import os
 import sys
+import json
 
 from setup import term, timecount, stop, device_type
 
-with open("Tools/config.txt", "r") as f:
-        speed = f.read()
+with open("config.json", "r") as f:
+    config = json.load(f)
+    speed = config["speed"]
 
 def keyboard_bruce():
         global char
