@@ -4,6 +4,7 @@ import time
 import threading
 import os
 import sys
+import json
 
 #Setup Time
 start_time = time.time()
@@ -13,10 +14,10 @@ def term():
         return "1"
     
 #Controling config
-file_name = "Tools/config.txt"
+file_name = "config.json"
 if not os.path.exists(file_name):
     with open(file_name, "w") as f:
-        f.write("0.05")
+        json.dump({"speed": 0.5}, f, indent=4)
 
 #Time counting
 def timecount():
