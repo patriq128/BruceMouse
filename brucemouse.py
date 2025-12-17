@@ -5,121 +5,20 @@ import time
 import threading
 import os
 import sys
+from setup import term, timecount, stop, device_type
+
+# Setup tools
+# ---------------------------
+from Tools.keyboard_bruce import keyboard_bruce
 
 try:
 
-# Some setup things
-# -------------------------------------------------------------------------------------------------------------------------------------         
-    def term():
-        if "--vis" in sys.argv:
-            return "1"
-    
     #Setup Time
     start_time = time.time()
     
-    #Controling config
-    file_name = "config.txt"
-    if not os.path.exists(file_name):
-        with open(file_name, "w") as f:
-            f.write("0.05")
-
-    #Read config file
-    with open("config.txt", "r") as f:
-        speed = f.read()
-
-    #Time counting
-    def timecount():
-        while True:
-            elapsed = time.time() - start_time
-            time.sleep(1)
-    
-    #Stop
-    def stop():
-        global objective
-        objective = round(time.time() - start_time, 2)
-        print("\033[2J\033[H", end="")
-        print("Good bye!")
-        text = f"\033[36mfinal running time: {objective:,}'s\033[0m"
-
-        text_len = 0
-        i = 0
-        while i < len(text):
-            if text[i] == "\033":
-                while i < len(text) and text[i] != "m":
-                    i += 1
-                i += 1
-            else:
-                text_len += 1
-                i += 1
-
-        width = text_len + 30
-        height = 5
-
-        for y in range(height):
-            if y == 0 or y == height - 1:
-                print("+" + "-" * (width - 2) + "+")
-            elif y == height // 2:
-                pad_left = (width - 2 - text_len) // 2
-                pad_right = (width - 2 - text_len) - pad_left
-                print("|" + " " * pad_left + text + " " * pad_right + "|")
-            else:
-                print("|" + " " * (width - 2) + "|")
-
-
-    def device_type():
-        if os.path.exists("/data/data/com.termux"):
-            return "0"
-        else:
-            return "1"        
-        
     #Setting time
     timer_thread = threading.Thread(target=timecount, daemon=True)
     timer_thread.start()
-# ------------------------------------------------------------------------------------------------------------------------------------- 
-        
-# Keyboard Bruce
-# -------------------------------------------------------------------------------------------------------------------------------------        
-    def keyboard_bruce():
-            global char
-            print("\033[2J\033[H", end="")
-            print("""\033[32m██╗  ██╗███████╗██╗   ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗ 
-██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔══██╗
-█████╔╝ █████╗   ╚████╔╝ ██████╔╝██║   ██║███████║██████╔╝██║  ██║
-██╔═██╗ ██╔══╝    ╚██╔╝  ██╔══██╗██║   ██║██╔══██║██╔══██╗██║  ██║
-██║  ██╗███████╗   ██║   ██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
-╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ """)
-            print("""                                                              
-█████▄ ▄▄▄▄  ▄▄ ▄▄  ▄▄▄▄ ▄▄▄▄▄ 
-██▄▄██ ██▄█▄ ██ ██ ██▀▀▀ ██▄▄  
-██▄▄█▀ ██ ██ ▀███▀ ▀████ ██▄▄▄                                \033[0m""")
-            print("\033[0m---------------------------------------------------------------------------------------------------------")
-            print("""Characters in bruce:
-          
-a) Lowercase
-b) Uppercase
-c) Digits
-d) Everything
-""")
-            print("\033[0m---------------------------------------------------------------------------------------------------------")
-            pen = input("typle select:")
-            if pen == "a":
-                char = string.ascii_lowercase
-            elif pen == "b":
-                char = string.ascii_uppercase
-            elif pen == "c":
-                char = string.digits
-            elif pen == "d":
-                char = string.ascii_lowercase + string.ascii_uppercase + string.digits
-            elif pen == "exit":
-                stop()
-                quit()
-            elif pen == "home":
-                main()
-            else:
-                print("\033[31m!Wrong Input!\033[0m")
-                time.sleep(1)
-                keyboard_bruce()
-            process()
 # ------------------------------------------------------------------------------------------------------------------------------------- 
 
 # Process
