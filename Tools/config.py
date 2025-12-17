@@ -1,4 +1,5 @@
 import time
+import json
 from setup import timecount, stop
 
 def config():
@@ -12,11 +13,9 @@ def config():
     ▀███████ ▀███▀ ██ ██  ██  ██▄ ▀████ 
                                     ██ 
                                 ▀▀▀  \033[0m""")
-        with open("Tools/config.txt", "r") as f:
-            speed = f.read()
-            speed = speed
-            print("Actual speed value:")
-            print(speed)
+        with open("config.json", "r") as f:
+            config = json.load(f)
+            print("Speed:", config["speed"])
         inputtxt = input("New speed value:")
         if inputtxt == "exit":
             stop()
@@ -28,5 +27,7 @@ def config():
             time.sleep(1)
             continue
         else:
-            with open("Tools/config.txt", "w") as f:
-                f.write(str(inputtxt))
+            config["speed"] = float(inputtxt)
+
+            with open("config.json", "w") as f:
+                json.dump(config, f, indent=4)
