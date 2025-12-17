@@ -13,7 +13,7 @@ def term():
         return "1"
     
 #Controling config
-file_name = "config.txt"
+file_name = "Tools/config.txt"
 if not os.path.exists(file_name):
     with open(file_name, "w") as f:
         f.write("0.05")
@@ -24,7 +24,7 @@ def timecount():
         elapsed = time.time() - start_time
         time.sleep(1)
     
-    #Stop
+#Stop
 def stop():
     global objective
     objective = round(time.time() - start_time, 2)
