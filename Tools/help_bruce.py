@@ -1,3 +1,5 @@
+# Author: @patriq128
+
 from setup import timecount, stop
 
 def help_bruce():
