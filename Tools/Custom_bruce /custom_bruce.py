@@ -4,6 +4,7 @@ import itertools
 import string
 import time
 import json
+import os
 
 from setup import term, timecount, stop, device_type
 
@@ -15,5 +16,26 @@ def custom_bruce():
 b) Run save files
 c) New file""")
 
-def custom_program():
-    print("nothing")
+    customselect = input("Select:")
+    if customselect == "a":
+        show_files()
+
+    elif customselect == "exit":
+        stop()
+        quit()
+    else:
+        print("\033[31m!Wrong Input!\033[0m")
+        time.sleep(1)
+        custom_bruce()
+
+def show_files():
+
+    folder = os.path.dirname(os.path.abspath(__file__))
+
+    json_files = [f[:-5] for f in os.listdir(folder) if f.endswith('.json')]
+
+    if not json_files:
+        print("\033[31m!No files!\033[0m")
+    else:
+        for idx, name in enumerate(json_files, start=1):
+            print(f"{idx}. {name}")
