@@ -14,7 +14,7 @@ from setup import term, timecount, stop, device_type
 # Setup tools
 # ------------------------------------------------------
 from Tools.keyboard_bruce import keyboard_bruce
-from Tools.custom_bruce import custom_bruce
+from Tools.Custom_bruce.custom_bruce import custom_bruce
 from Tools.calculate_bruce import calculate
 from Tools.help_bruce import help_bruce
 from Tools.config import config
