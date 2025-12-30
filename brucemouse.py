@@ -14,6 +14,7 @@ from setup import term, timecount, stop, device_type
 # Setup tools
 # ------------------------------------------------------
 from Tools.keyboard_bruce import keyboard_bruce
+from Tools.custom_bruce import custom_bruce
 from Tools.calculate_bruce import calculate
 from Tools.help_bruce import help_bruce
 from Tools.config import config
@@ -53,19 +54,23 @@ try:
         #Asking :3
         print("What type of bruce you want?")
         print("""1.) Keyboard Bruce
-2.) Calculate Bruce
-3.) Help
+2.) Custom Bruce
+3.) Calculate Bruce
+4.) Help
 *) Config""")
         present = input("Select:")
 
         #Main Part
         if present == "1":
             keyboard_bruce()
-        
+
         elif present == "2":
-            calculate()
+            custom_bruce()
         
         elif present == "3":
+            calculate()
+        
+        elif present == "4":
             help_bruce()
         
         elif present == "*":
@@ -86,6 +91,8 @@ try:
     def maind():
         if "--key" in sys.argv:
             keyboard_bruce()
+        elif "--cust" in sys.argv:
+            custom_bruce()
         elif "--calc" in sys.argv:
             calculate()
         elif "--help" in sys.argv:
