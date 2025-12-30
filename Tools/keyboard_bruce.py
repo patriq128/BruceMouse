@@ -1,9 +1,6 @@
 import itertools
 import string
 import time
-import threading
-import os
-import sys
 import json
 
 from setup import term, timecount, stop, device_type
