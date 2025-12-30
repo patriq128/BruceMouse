@@ -1,3 +1,5 @@
+# Author: @patriq128
+
 import string
 
 from setup import timecount, stop
