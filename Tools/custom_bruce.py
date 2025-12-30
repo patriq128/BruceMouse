@@ -1,3 +1,5 @@
+# Author: @patriq128
+
 import itertools
 import string
 import time
