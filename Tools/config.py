@@ -1,3 +1,5 @@
+# Author: @patriq128
+
 import time
 import json
 from setup import timecount, stop
