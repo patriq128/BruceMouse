@@ -68,7 +68,6 @@ def process():
         conbination = itertools.product(char, repeat=prosessn)
         #main
         if device_type() == "1":
-            import pyautogui
             if term() == "1":
                 print("Only Visulation mode")
                 time.sleep(4)
@@ -78,6 +77,7 @@ def process():
                 stop()
                 quit()
             else:
+                import pyautogui
                 print("Choose the site")
                 time.sleep(4)
                 for conbinatione in conbination:
