@@ -27,8 +27,6 @@ Y88b  d88P 888  888 888 Y88b.    Y88b 888 888 888  888 Y88b.  888 Y88..88P 888  
         if world1 == "exit":
             stop()
             quit()
-        elif world1 == "home":
-            main()
         else:
             world = world1
         
