@@ -103,7 +103,10 @@ def new_files():
         pass
 
     print("Write the code with the symbols in help and when you are finish press Enter.")
-    print("""""")
+    print("""b = bruce attack 1x
+w = wait [-c = config] [-number = custom time]
+m = manual [-text = custom text to write] [-e = enter]
+r = repeat (use { to stard and } to end)""")
     print("\033[31m!New comand mean space and , !\033[0m")
 
     program = input("Write program:")
@@ -116,6 +119,97 @@ def new_files():
 
 #Run files
 #---------------------------------------------------------------------------------------------------------
+def bruce_attack():
+    # TODO: implement bruce attack
+    print("[b] Bruce attack executed")
+
+
+def wait_config():
+    # TODO: read wait time from config
+    print("[w] Waiting using config")
+
+
+def wait_custom(value: int):
+    # TODO: custom wait logic
+    print(f"[w] Waiting for {value}")
+
+
+def manual_text(text: str):
+    # TODO: manual text logic
+    print(f"[m] Manual text: {text}")
+
+
+def manual_enter():
+    # TODO: enter logic
+    print("[m] Enter pressed")
+
+def execute_command(cmd: str, arg=None):
+    if cmd == "b":
+        bruce_attack()
+
+    elif cmd == "w":
+        if arg == "c":
+            wait_config()
+        elif isinstance(arg, int):
+            wait_custom(arg)
+        else:
+            raise ValueError("Invalid argument for w")
+
+    elif cmd == "m":
+        if arg == "e":
+            manual_enter()
+        elif isinstance(arg, str):
+            manual_text(arg)
+        else:
+            raise ValueError("Invalid argument for m")
+
+    else:
+        raise ValueError(f"Unknown command: {cmd}")
+
+def parse_and_run(program: str):
+    tokens = program.replace(" ", "").split(",")
+    i = 0
+    last_block = []
+
+    while i < len(tokens):
+        token = tokens[i]
+
+        # ---------- BLOCK ----------
+        if token.startswith("{"):
+            block = token[1:]
+            while not tokens[i].endswith("}"):
+                i += 1
+                block += "," + tokens[i]
+            block = block[:-1]  # remove }
+            last_block = block.split(",")
+
+            for t in last_block:
+                run_token(t)
+
+        # ---------- REPEAT ----------
+        elif token.isdigit() and i + 1 < len(tokens) and tokens[i + 1] == "r":
+            count = int(token)
+            for _ in range(count):
+                for t in last_block:
+                    run_token(t)
+            i += 1  # skip r
+
+        # ---------- NORMAL ----------
+        else:
+            run_token(token)
+
+        i += 1
+
+
+def run_token(token: str):
+    if "-" in token:
+        cmd, arg = token.split("-", 1)
+        if arg.isdigit():
+            arg = int(arg)
+        execute_command(cmd, arg)
+    else:
+        execute_command(token)
+
 def run_files():
     files = [
         os.path.join(folder, f)
@@ -152,4 +246,10 @@ def run_files():
     selected_file_path = files[index]
 
     print("Running:", selected_file_path)
+
+    with open(selected_file_path, "r") as f:
+        data = json.load(f)
+
+    program = data["Program"]
+    parse_and_run(program)
 #---------------------------------------------------------------------------------------------------------
