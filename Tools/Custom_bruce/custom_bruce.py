@@ -15,6 +15,7 @@ def custom_bruce():
     print("""a) Show save files
 b) Run save files
 c) New file""")
+    print("\033[0m---------------------------------------------------------------------------------------------------------")
 
     customselect = input("Select:")
     if customselect == "a":
