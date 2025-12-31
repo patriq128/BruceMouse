@@ -10,6 +10,8 @@ from setup import term, timecount, stop, device_type
 
 folder = os.path.dirname(os.path.abspath(__file__))
 
+#Main
+#---------------------------------------------------------------------------------------------------------
 def custom_bruce():
     print("\033[2J\033[H", end="")
     print("""\033[32m Custom Bruce \033[0m""") # !Dont forget change NAME!
@@ -26,6 +28,9 @@ c) Run save files""")
     elif customselect == "b":
         new_files()
 
+    elif customselect == "c":
+        run_files()
+
     elif customselect == "exit":
         stop()
         quit()
@@ -33,7 +38,10 @@ c) Run save files""")
         print("\033[31m!Wrong Input!\033[0m")
         time.sleep(1)
         custom_bruce()
+#---------------------------------------------------------------------------------------------------------
 
+#Show files
+#---------------------------------------------------------------------------------------------------------
 def show_files():
     files = [
         os.path.join(folder, f)
@@ -73,15 +81,18 @@ def show_files():
     print("\033[0m---------------------------------------------------------------------------------------------------------")
     print("""a) Delete file
 b) Open file""")
-    optionsele = input("Choose optino:")
 
+    optionsele = input("Choose optino:")
     if optionsele == "a":
         os.remove(selected_file_path)
     elif optionsele == "b":
         with open(selected_file_path, "r") as f:
             data = json.load(f)
         print(data["Program"])
+#---------------------------------------------------------------------------------------------------------
 
+#New file
+#---------------------------------------------------------------------------------------------------------
 def new_files():
     print("New File") # Repair this later !
     print("\033[0m---------------------------------------------------------------------------------------------------------")
@@ -101,3 +112,44 @@ def new_files():
 
     with open(CONFIG_PATH, "w") as f:
         json.dump(writepro, f, indent=4)
+#---------------------------------------------------------------------------------------------------------
+
+#Run files
+#---------------------------------------------------------------------------------------------------------
+def run_files():
+    files = [
+        os.path.join(folder, f)
+        for f in os.listdir(folder)
+        if f.endswith(".json")
+    ]
+
+    if not files:
+        print("\033[31m!No files!\033[0m")
+        return
+
+    for i, path in enumerate(files, start=1):
+        name = os.path.basename(path)[:-5] 
+        print(f"{i}. {name}")
+
+    print("\033[0m---------------------------------------------------------------------------------------------------------")
+    selectc = input("File number: ")
+
+    if selectc == "exit":
+        stop()
+        quit()
+
+    if not selectc.isdigit():
+        print("\033[31m!Wrong Input!\033[0m")
+        time.sleep(1)
+        show_files()
+
+    index = int(selectc) - 1
+
+    if index < 0 or index >= len(files):
+        print("no file")
+        return
+
+    selected_file_path = files[index]
+
+    print("Running:", selected_file_path)
+#---------------------------------------------------------------------------------------------------------
