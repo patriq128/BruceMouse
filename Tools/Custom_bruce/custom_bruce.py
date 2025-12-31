@@ -35,14 +35,50 @@ c) Run save files""")
         custom_bruce()
 
 def show_files():
+    files = [
+        os.path.join(folder, f)
+        for f in os.listdir(folder)
+        if f.endswith(".json")
+    ]
 
-    json_files = [f[:-5] for f in os.listdir(folder) if f.endswith('.json')]
-
-    if not json_files:
+    if not files:
         print("\033[31m!No files!\033[0m")
-    else:
-        for idx, name in enumerate(json_files, start=1):
-            print(f"{idx}. {name}")
+        return
+
+    for i, path in enumerate(files, start=1):
+        name = os.path.basename(path)[:-5] 
+        print(f"{i}. {name}")
+
+    print("\033[0m---------------------------------------------------------------------------------------------------------")
+    selectc = input("File number: ")
+
+    if selectc == "exit":
+        stop()
+        quit()
+
+    if not selectc.isdigit():
+        print("")
+
+    index = int(selectc) - 1
+
+    if index < 0 or index >= len(files):
+        print("no file")
+        return
+
+    selected_file_path = files[index]
+
+    print("Selected file:", selected_file_path)
+    print("\033[0m---------------------------------------------------------------------------------------------------------")
+    print("""a) Delete file
+b) Open file""")
+    optionsele = input("Choose optino:")
+
+    if optionsele == "a":
+        os.remove(selected_file_path)
+    elif optionsele == "b":
+        with open(selected_file_path, "r") as f:
+            data = json.load(f)
+        print(data["Program"])
 
 def new_files():
     print("New File") # Repair this later !
