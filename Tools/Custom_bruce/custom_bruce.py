@@ -173,31 +173,24 @@ def parse_and_run(program: str):
 
     while i < len(tokens):
         token = tokens[i]
-
-        # ---------- BLOCK ----------
         if token.startswith("{"):
             block = token[1:]
             while not tokens[i].endswith("}"):
                 i += 1
                 block += "," + tokens[i]
-            block = block[:-1]  # remove }
+            block = block[:-1]
             last_block = block.split(",")
 
             for t in last_block:
                 run_token(t)
-
-        # ---------- REPEAT ----------
         elif token.isdigit() and i + 1 < len(tokens) and tokens[i + 1] == "r":
             count = int(token)
             for _ in range(count):
                 for t in last_block:
                     run_token(t)
-            i += 1  # skip r
-
-        # ---------- NORMAL ----------
+            i += 1
         else:
             run_token(token)
-
         i += 1
 
 
