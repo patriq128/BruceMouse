@@ -14,7 +14,7 @@ def custom_bruce():
     print("\033[2J\033[H", end="")
     print("""\033[32m Custom Bruce \033[0m""") # !Dont forget change NAME!
     print("\033[0m---------------------------------------------------------------------------------------------------------")
-    print("""a) Show save files
+    print("""a) Manipulate save files
 b) New file
 c) Run save files""")
     print("\033[0m---------------------------------------------------------------------------------------------------------")
@@ -57,7 +57,9 @@ def show_files():
         quit()
 
     if not selectc.isdigit():
-        print("")
+        print("\033[31m!Wrong Input!\033[0m")
+        time.sleep(1)
+        show_files()
 
     index = int(selectc) - 1
 
