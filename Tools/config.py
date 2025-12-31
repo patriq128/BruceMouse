@@ -22,8 +22,6 @@ def config():
         if inputtxt == "exit":
             stop()
             quit()
-        elif inputtxt == "home":
-            return
         elif any(c.isalpha() for c in inputtxt):
             print("\033[31m!Only digits!\033[0m")
             time.sleep(1)
