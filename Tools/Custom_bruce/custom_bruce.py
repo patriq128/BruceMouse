@@ -45,10 +45,21 @@ def show_files():
             print(f"{idx}. {name}")
 
 def new_files():
-    print("New File")
+    print("New File") # Repair this later !
     print("\033[0m---------------------------------------------------------------------------------------------------------")
     namec = input("File Name:")
 
     CONFIG_PATH = os.path.join(folder, os.path.join(".", f"{namec}.json"))
     with open(CONFIG_PATH, "w") as f:
         pass
+
+    print("Write the code with the symbols in help and when you are finish press Enter.")
+    print("""""")
+    print("\033[31m!New comand mean space and , !\033[0m")
+
+    program = input("Write program:")
+
+    writepro = {"Program": program}
+
+    with open(CONFIG_PATH, "w") as f:
+        json.dump(writepro, f, indent=4)
