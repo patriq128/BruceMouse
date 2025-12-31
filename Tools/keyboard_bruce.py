@@ -45,8 +45,6 @@ d) Everything
         elif pen == "exit":
             stop()
             quit()
-        elif pen == "home":
-            main()
         else:
             print("\033[31m!Wrong Input!\033[0m")
             time.sleep(1)
