@@ -107,7 +107,7 @@ def new_files():
 w = wait [-c = config] [-number = custom time]
 m = manual [-text = custom text to write] [-e = enter]
 r = repeat (use { to stard and } to end)""")
-    print("\033[31m!New comand mean "," !\033[0m")
+    print("""\033[31m!New comand mean "," !\033[0m""")
 
     program = input("Write program:")
 
