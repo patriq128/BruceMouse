@@ -107,7 +107,7 @@ def new_files():
 w = wait [-c = config] [-number = custom time]
 m = manual [-text = custom text to write] [-e = enter]
 r = repeat (use { to stard and } to end)""")
-    print("\033[31m!New comand mean space and , !\033[0m")
+    print("\033[31m!New comand mean "," !\033[0m")
 
     program = input("Write program:")
 
@@ -183,7 +183,6 @@ def parse_and_run(program: str):
     while i < len(tokens):
         token = tokens[i]
 
-        # blok začínajúci '{'
         if token.startswith("{"):
             block = token[1:]
             while i + 1 < len(tokens) and not tokens[i].endswith("}"):
@@ -193,17 +192,13 @@ def parse_and_run(program: str):
             if not tokens[i].endswith("}"):
                 print("\033[31m!Warning: Block never closed with '}'\033[0m")
             else:
-                # odstránime koncové '}'
                 block = block.rstrip("}")
 
-            # rozdelíme podľa čiarky
             last_block = block.split(",")
 
-            # spustíme každý token z bloku
             for t in last_block:
                 run_token(t)
 
-        # repeat posledného bloku
         elif token.isdigit() and i + 1 < len(tokens) and tokens[i + 1] == "r":
             if not last_block:
                 print("\033[31m!Warning: Nothing to repeat\033[0m")
@@ -214,7 +209,6 @@ def parse_and_run(program: str):
                         run_token(t)
             i += 1  # preskočíme "r"
 
-        # normálny token
         else:
             run_token(token)
 
