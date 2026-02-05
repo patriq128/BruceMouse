@@ -69,3 +69,19 @@ def device_type():
 #Setting time
 timer_thread = threading.Thread(target=timecount, daemon=True)
 timer_thread.start()
+
+#OS type
+def what_OS():
+    if "TERMUX_VERSION" in os.environ or os.path.exists("/data/data/com.termux"):
+        return "Termux"
+
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        return "Windows"
+    elif os_name == "Darwin":
+        return "MacOS"
+    elif os_name == "Linux":
+        return "Linux"
+    else:
+        return f"{os_name}"
