@@ -4,8 +4,10 @@ import itertools
 import string
 import time
 import json
+import platform
+import subprocess
 
-from setup import term, timecount, stop, device_type
+from setup import term, timecount, stop, device_type, what_OS
 
 with open("config.json", "r") as f:
     config = json.load(f)
@@ -74,21 +76,50 @@ def process():
                 stop()
                 quit()
             else:
-                import pyautogui
-                print("Choose the site")
-                time.sleep(4)
-                for conbinatione in conbination:
-                    print(''.join(conbinatione))
-                    pyautogui.typewrite(conbinatione)
-                    pyautogui.press("enter")
-                    time.sleep(float(speed))
-                stop()
-                quit()
+                try:
+                    import pyautogui
+
+                    print("Choose the site")
+                    time.sleep(4)
+                    for conbinatione in conbination:
+                        print(''.join(conbinatione))
+                        pyautogui.typewrite(conbinatione)
+                        pyautogui.press("enter")
+                        time.sleep(float(speed))
+                    stop()
+                    quit()
+
+                except ImportError:
+                    print("""\033[0mYou dont have libary \033[91m"pyautogui" """)
+                    print("\033[92mStart download?")
+                    y_or_n = input("""\033[92m"y"\033[0m/\033[91m"n"\033[0m: """)
+                    if y_or_n == "y":
+                        download()
+                    elif y_or_n == "n":
+                        print("\033[91mWithout libarys its dont gonna work")
+                        print("\033[0mSwitching to visual mode")
+                        time.sleep(2)
+
         else:
             print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
+            print("Only Visulation mode")
             time.sleep(4)
             for conbinatione in conbination:
                 print(''.join(conbinatione))
                 time.sleep(float(speed))
             stop()
             quit()
+
+
+def download():
+    print("\033[0mDevice OS: \033[92m" + what_OS() + "\033[94m")
+    if what_OS() in ["MacOS", "Windows"]:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pyautogui"])
+    elif what_OS() == "Linux":
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pyautogui", "--break-system-packages"])
+    else:
+        print("\033[91mSorry, something went wrong")
+    
+    print("\033[91mDone")
+    time.sleep(1)
+    main()
