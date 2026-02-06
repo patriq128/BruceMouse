@@ -13,7 +13,7 @@ from setup import term, timecount, stop, device_type
 
 # Setup tools
 # ------------------------------------------------------
-from Tools.keyboard_bruce import keyboard_bruce
+from Tools.keyboard_bruce import main_keybruce
 from Tools.Custom_bruce.custom_bruce import custom_bruce
 from Tools.calculate_bruce import calculate
 from Tools.help_bruce import help_bruce
@@ -62,7 +62,7 @@ try:
 
         #Main Part
         if present == "1":
-            keyboard_bruce()
+            main_keybruce()
 
         elif present == "2":
             custom_bruce()
