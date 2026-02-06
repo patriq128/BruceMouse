@@ -6,12 +6,15 @@ import time
 import json
 import platform
 import subprocess
-
-from setup import term, timecount, stop, device_type, what_OS
+import os
+import sys
+from setup import term, timecount, stop, device_type
 
 with open("config.json", "r") as f:
     config = json.load(f)
     speed = config["speed"]
+
+visin = 0
 
 def keyboard_bruce():
         global char
@@ -54,7 +57,8 @@ d) Everything
         process()
 
 
-def process():
+def process(mode=None):
+        global visin
         numberp = input("Number input:")
         if any(c.isalpha() for c in numberp):
             print("\033[31m!Only digits!\033[0m")
@@ -67,7 +71,7 @@ def process():
         conbination = itertools.product(char, repeat=prosessn)
         #main
         if device_type() == "1":
-            if term() == "1":
+            if term() == "1" or visin == 1:
                 print("Only Visulation mode")
                 time.sleep(4)
                 for conbinatione in conbination:
@@ -76,29 +80,16 @@ def process():
                 stop()
                 quit()
             else:
-                try:
-                    import pyautogui
-
-                    print("Choose the site")
-                    time.sleep(4)
-                    for conbinatione in conbination:
-                        print(''.join(conbinatione))
-                        pyautogui.typewrite(conbinatione)
-                        pyautogui.press("enter")
-                        time.sleep(float(speed))
-                    stop()
-                    quit()
-
-                except ImportError:
-                    print("""\033[0mYou dont have libary \033[91m"pyautogui" """)
-                    print("\033[92mStart download?")
-                    y_or_n = input("""\033[92m"y"\033[0m/\033[91m"n"\033[0m: """)
-                    if y_or_n == "y":
-                        download()
-                    elif y_or_n == "n":
-                        print("\033[91mWithout libarys its dont gonna work")
-                        print("\033[0mSwitching to visual mode")
-                        time.sleep(2)
+                import pyautogui
+                print("Choose the site")
+                time.sleep(4)
+                for conbinatione in conbination:
+                    print(''.join(conbinatione))
+                    pyautogui.typewrite(conbinatione)
+                    pyautogui.press("enter")
+                    time.sleep(float(speed))
+                stop()
+                quit()
 
         else:
             print("\033[31mSorry virtual keyboard work only on desktop. Maybe sometimes this gonna work >:3\033[0m")
@@ -110,7 +101,6 @@ def process():
             stop()
             quit()
 
-
 def download():
     print("\033[0mDevice OS: \033[92m" + what_OS() + "\033[94m")
     if what_OS() in ["MacOS", "Windows"]:
@@ -121,5 +111,39 @@ def download():
         print("\033[91mSorry, something went wrong")
     
     print("\033[91mDone")
-    time.sleep(1)
-    main()
+
+def what_OS():
+    if "TERMUX_VERSION" in os.environ or os.path.exists("/data/data/com.termux"):
+        return "Termux"
+
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        return "Windows"
+    elif os_name == "Darwin":
+        return "MacOS"
+    elif os_name == "Linux":
+        return "Linux"
+    else:
+        return f"{os_name}"
+
+def main_keybruce():
+    global visin
+    if device_type() == "1" and not(term() == "1"):
+        try:
+            import pyautogui
+            keyboard_bruce()
+        except ImportError:
+            print("""\033[0mYou dont have libary \033[91m"pyautogui" """)
+            print("\033[92mStart download?")
+            y_or_n = input("""\033[92m"y"\033[0m/\033[91m"n"\033[0m: """)
+            if y_or_n == "y":
+                download()
+            elif y_or_n == "n":
+                print("\033[91mWithout libarys its dont gonna work")
+                print("\033[0mSwitching to visual mode")
+                time.sleep(2)
+                visin = True
+                keyboard_bruce()
+    else:
+        keyboard_bruce()
